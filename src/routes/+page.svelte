@@ -8,6 +8,14 @@
 <main
   class="relative flex flex-col items-center justify-center min-h-screen py-10"
 >
+  <a href='/protected'>protected route</a>
+
+  <form method="POST">
+    <!-- Form fields go here -->
+    <input name="email"/>
+    <button type="submit">Submit</button>
+  </form>
+
   <a
     href="https://vercel.com"
     class="px-6 py-2 text-sm font-medium text-gray-600 transition-all rounded-full shadow-sm bg-white/30 dark:bg-white/80 ring-1 ring-gray-900/5 dark:text-black hover:shadow-lg active:shadow-sm"

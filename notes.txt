@@ -1,0 +1,31 @@
+==================================
+RUNNING LOCALLY
+
+* Run with "npm run dev" instead of "vercel dev" because the latter causes CORS errors. 
+
+* However, running without "vercel dev" causes @vercel/kv to not work (bc KV env variables are not loaded right). See solution below.
+
+* KV Environment Variables
+- Set KV variables in CMD console because they are not read from .env or .env.development.local files right by Vite
+
+CMD shell
+Set KV_REST_API_URL="https://immortal-tetra-33951.kv.vercel-storage.com"
+Set KV_REST_API_TOKEN="AYSfASQgNDVlYjMzYmUtMGJjNy00YWFkLWIyOGUtODMxMGVjMzUwZDRjZmIyNmFkMTU3MTk5NDgwY2EwY2UwMDZiMTQyN2E3ZTE="
+
+Power shell
+$env:KV_REST_API_URL="https://immortal-tetra-33951.kv.vercel-storage.com"
+$env:KV_REST_API_TOKEN="AYSfASQgNDVlYjMzYmUtMGJjNy00YWFkLWIyOGUtODMxMGVjMzUwZDRjZmIyNmFkMTU3MTk5NDgwY2EwY2UwMDZiMTQyN2E3ZTE="
+
+
+==================================
+LINKS
+
+Auth.js
+https://mainmatter.com/blog/2023/11/23/setting-up-oauth-with-auth-js-and-sveltekit/
+https://medium.com/@uriser/authentication-in-sveltekit-with-auth-js-7ff505d584c4
+
+Google OAuth API
+https://console.cloud.google.com/apis/credentials?project=fifth-arch-1704582792772
+
+GitHub OAuth API
+https://github.com/settings/developers
