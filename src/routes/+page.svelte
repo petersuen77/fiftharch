@@ -1,13 +1,11 @@
 <script>
-  export let data
+  export let data;
   function refreshPage() {
     location.reload()
   }
 </script>
 
-<main
-  class="relative flex flex-col items-center justify-center min-h-screen py-10"
->
+<main class="relative flex flex-col items-center justify-center min-h-screen py-10">
   <a href='/protected'>protected route</a>
 
   <form method="POST">

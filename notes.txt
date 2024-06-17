@@ -16,6 +16,12 @@ Power shell
 $env:KV_REST_API_URL="https://immortal-tetra-33951.kv.vercel-storage.com"
 $env:KV_REST_API_TOKEN="AYSfASQgNDVlYjMzYmUtMGJjNy00YWFkLWIyOGUtODMxMGVjMzUwZDRjZmIyNmFkMTU3MTk5NDgwY2EwY2UwMDZiMTQyN2E3ZTE="
 
+==================================
+DEPLOYMENT
+
+* Set production environment variables in Vercel; make sure they are tied to the Vercel fiftharch project.
+
+* Use "vercel --prod" to deploy
 
 ==================================
 LINKS

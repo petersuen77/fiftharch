@@ -3,7 +3,7 @@
 	import { page } from "$app/stores"
 </script>
 
-<div>
+<div class="flex-1 flex flex-col overflow-hidden">
   <header>
     <div class="signedInStatus">
       <p class="nojs-show loaded">
@@ -18,8 +18,7 @@
             <small>Signed in as</small><br />
             <strong
               >{$page.data.session.user?.email ??
-                $page.data.session.user?.name}</strong
-            >
+                $page.data.session.user?.name}</strong>
           </span>
           <a
             href="/auth/signout"
@@ -43,7 +42,10 @@
       </ul>
     </nav>
   </header>
-  <slot />
+
+  <div class="flex h-full">
+    <slot />
+  </div>
 </div>
 
 <style>
@@ -64,7 +66,7 @@
       "Segoe UI Symbol",
       "Noto Color Emoji";
     padding: 0 1rem 1rem 1rem;
-    max-width: 680px;
+    max-width: 1000px;
     margin: 0 auto;
     background: #fff;
     color: #333;
