@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width" />
   </head>
   <body data-sveltekit-preload-data="hover">
-    <div style="display: contents">SimHenua</div>
+    <div class="border-dashed">
+      <img src="/SimHenua_Splash.png" alt="SimHenua" width="600" />
+  </div>
   </body>
 </html>
 
