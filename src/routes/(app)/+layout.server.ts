@@ -1,4 +1,4 @@
-import type { LayoutServerLoad } from "./protected/$types"
+import type { LayoutServerLoad } from "../protected/$types"
 
 export const load: LayoutServerLoad = async (event) => {
     return {

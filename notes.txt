@@ -24,6 +24,27 @@ DEPLOYMENT
 * Use "vercel --prod" to deploy
 
 ==================================
+LOCAL ENVIRONMENT SETUP
+
+* Download & install Visual Studio Code (https://code.visualstudio.com/download). Install "Svelte for VS Code" and "Tailwind CSS IntelliSense".
+
+* Setup Git: https://git-scm.com/download. Clone fiftharch Github repo: https://github.com/petersuen77/fiftharch.git. Branch it locally. 
+    * Also make sure you have a github account.
+
+* Install node.js (https://nodejs.org/en/download/prebuilt-installer), which seems to also include npm (otherwise install npm).
+
+* Install latest PowerShell on Windows and restart.
+
+* In VScode terminal (can be PowerShell) 
+    * Run "npm install" to install all package dependencies.
+    * Run "vercel login" with github credentials.
+    * Run "vercel env pull" to get online Vercel env variables into local .env file.
+    * Test running server locally (see above)  
+
+* Install Redis Insight to view KV database. Use "immortal-tetra-33951.kv.vercel-storage.com:33951" to connect to fiftharch KV.
+
+
+==================================
 LINKS
 
 Auth.js
