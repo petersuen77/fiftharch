@@ -2,6 +2,11 @@
   import { page } from "$app/stores";
   export let data;
   export let form;
+
+  data.name = "Park Matthew";
+  data.id = 100;
+  data.sites = [ {"zone":'A', "id":1}, {"zone":'B', "id":10},  {"zone":'C', "id":93} ];
+
 </script>
 
 <div class="flex items-top justify-center h-screen w-[60%] m-4">
@@ -15,6 +20,15 @@
 
     <div class="text-medium font-medium">Park {data.id}</div>
     <div class="text-medium font-medium">{data.name}</div>
+
+    <!--List of Sites -->
+    <ul>
+      {#each data.sites as site}
+        <li>
+          {site.zone}-{site.id}
+        </li>
+      {/each}
+    </ul>
   </div>
 </div>
 
