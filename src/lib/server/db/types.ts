@@ -5,11 +5,23 @@ export type Project = {
 };
 
 // SIMHENUA TYPES
+export type SimHENUA = {
+    parks: Park[];
+};
+
 export type Park = {
     id: number;
     name: string;
 };
 
-export type SimHENUA = {
-    parks: Park[];
+export type Site = {
+    id: number;
+    name: string;
+    siteType: SiteType;
+    state: number;
+};
+
+export type SiteType = {
+    name: string;
+    img: string;
 };
