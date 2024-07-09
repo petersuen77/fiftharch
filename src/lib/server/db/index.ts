@@ -1,4 +1,4 @@
-import type { Project } from './types';
+import type { Project, Park, SimHENUA } from './types';
 
 const KEY_PAGE_VISITS = 'pageVisits';
 const KEY_PROJECTS_BY_USER_EMAIL = 'projects:by-user-email:#';
