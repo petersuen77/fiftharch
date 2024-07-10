@@ -21,7 +21,4 @@ export type Site = {
     state: number;
 };
 
-export type SiteType = {
-    name: string;
-    img: string;
-};
+export type SiteType = ["Ahu", "Taheta"];
