@@ -21,6 +21,9 @@
     <div class="text-medium font-medium">Park {data.id}</div>
     <div class="text-medium font-medium">{data.name}</div>
 
+    <br/>
+    <div class="text-medium font-medium">Sites</div>
+
     <!--List of Sites -->
     <ul>
       {#each data.sites as site}
