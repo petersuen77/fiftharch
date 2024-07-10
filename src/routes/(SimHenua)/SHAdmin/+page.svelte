@@ -18,7 +18,7 @@
     <ul>
       {#each data.game.parks as park}
         <li>
-          <form method="POST" class="pt-3 pb-3 mb-4" action="?/updatePark"></form>
+          <form method="POST" class="pt-3 pb-3 mb-4" action="?/updatePark">
             <label
               class="gray-700 text-sm font-medium mb-2 pr-2"
               for="parkName"
