@@ -12,21 +12,51 @@
   <div class="p-4">
     <h1 class="text-lg font-semibold pb-3">SimHENUA Admin</h1>
 
-    <div class="text-medium font-medium">Site {data.zone}-{data.id}</div>
+    <div class="text-medium font-medium">Site {site.zone}-{site.id}</div>
 
-    {#if data.siteType}
-    <div class="text-medium font-medium">{data.siteType}</div>
-    {/if}
+    <form
+      method="POST"
+      class="pt-3 pb-3 mb-4"
+      action="?/updateSite"
+      name="site_{site.id}"
+    >
+      {#if site.siteType}
+        <div class="text-medium font-medium">{site.siteType}</div>
+      {/if}
 
-    <a href="/SHAdmin/site/{data.id}">{data.zone}-{data.id}</a>
+      <a href="/SHAdmin/site/{site.id}">{site.zone}-{site.id}</a>
 
-    {#if data.state == 0}
-      <div>State: POOR</div>
-    {:else if data.state == 1}
-      <div>State: NORMAL</div>
-    {:else if data.state == 2}
-      <div>State: GOOD</div>
-    {/if}
+      <br/>
+      <label for="siteType">Type</label>
+      <select name="siteTypes" id="siteType">
+        <option value="Ahu">Ahu</option>
+        <option value="Hare paenga">Hare Paenga</option>
+        <option value="Moai">Moai</option>
+        <option value="Pukao">Pukao</option>
+        <option value="Umu">Umu</option>
+        <option value="Ana kionga#">Ana Kionga</option>
+        <option value="Mataa">Mataa</option>
+        <option value="Taupea">Taupea</option>
+        <option value="Manavai">Manavai</option>
+        <option value="Taheta">Taheta</option>
+        <option value="Tupa">Tupa</option>
+      </select>
+
+      {#if site.state == 0}
+        <div>State: POOR</div>
+      {:else if site.state == 1}
+        <div>State: NORMAL</div>
+      {:else if site.state == 2}
+        <div>State: GOOD</div>
+      {/if}
+
+      <button
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold mt-2 py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        type="submit"
+      >
+        Update
+      </button>
+    </form>
   </div>
 </div>
 

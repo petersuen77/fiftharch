@@ -23,4 +23,4 @@ export type Site = {
 };
 
 const siteTypesArray = ["Ahu", "Hare paenga", "Moai", "Pukao", "Umu", "Ana kionga", "Mataa", "Taupea", "Manavai", "Taheta", "Tupa"] as const;
-export type SiteTypee = typeof siteTypesArray[number];
+export type SiteType = typeof siteTypesArray[number];
