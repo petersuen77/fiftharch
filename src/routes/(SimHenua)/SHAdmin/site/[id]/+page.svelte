@@ -13,9 +13,12 @@
     <h1 class="text-lg font-semibold pb-3">SimHENUA Admin</h1>
 
     <div class="text-medium font-medium">Site {data.zone}-{data.id}</div>
-    <div class="text-medium font-medium">{data.siteType.name}</div>
 
-    <a href="/SHAdmin/site/{site.id}">{site.zone}-{site.id}</a>
+    {#if data.siteType}
+    <div class="text-medium font-medium">{data.siteType}</div>
+    {/if}
+
+    <a href="/SHAdmin/site/{data.id}">{data.zone}-{data.id}</a>
 
     {#if data.state == 0}
       <div>State: POOR</div>

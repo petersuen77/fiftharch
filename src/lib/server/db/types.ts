@@ -12,11 +12,12 @@ export type SimHENUA = {
 export type Park = {
     id: number;
     name: string;
+    sites: Site[];
 };
 
 export type Site = {
+    zone: string;
     id: number;
-    name: string;
     siteType: SiteType;
     state: number;
 };

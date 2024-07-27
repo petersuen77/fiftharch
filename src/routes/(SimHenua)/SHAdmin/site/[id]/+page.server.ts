@@ -4,7 +4,7 @@ import { fail } from '@sveltejs/kit';
 
 import { error } from '@sveltejs/kit';
 
-import type { Site, SiteType, SimHENUA } from '../../../../lib/server/db/types';
+import type { Park, Site, SiteType, SimHENUA } from '../../../../lib/server/db/types';
 
 const KEY_SIM_HENUA = 'SimHENUA';
 let game: SimHENUA;
@@ -12,9 +12,10 @@ let game: SimHENUA;
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ params }) {
     // Parse id into park and site id
-    const parts = params.id.split("#");
-    
-    const site = await getSiteFromDatabase(params.id);
+    const parts = params.id.split("_");
+    const parkId = parts[0];
+    const siteId = parts[1];
+    const site = await getSiteFromDatabase(parkId, siteId);
 
     if (site) {
         return site;
@@ -23,8 +24,8 @@ export async function load({ params }) {
     error(404, 'Not found');
 }
 
-async function getSiteFromDatabase(siteId: number) {
-    console.log("Getting siteId=" + siteId);
+async function getSiteFromDatabase(parkId: number, siteId: number) {
+    console.log("Getting siteId=" + siteId + " from parkId=" + parkId);
     try {
         // Load game
         game = await kv.get(KEY_SIM_HENUA);
@@ -37,18 +38,31 @@ async function getSiteFromDatabase(siteId: number) {
             }
         }
         
-        // Find site
+        // Find park
         let i = 0;
+        let park = null;
         while (i < game.parks.length) {
             if (game.parks[i].id == parkId)
-                return game.parks[i];
+                park = game.parks[i];
+            i = game.parks.length;
             i++;
         }
-        return false;
+        if (!park) return;
+
+        // Find site
+        i = 0;
+        while (i < park.sites.length) {
+            if (park.sites[i].id == siteId)
+                return park.sites[i];
+            i++;
+        }
+        return null;
     } catch (error) {
         // Handle errors
     }
 }
+
+
 
 
 
