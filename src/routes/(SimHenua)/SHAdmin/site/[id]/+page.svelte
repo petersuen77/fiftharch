@@ -29,17 +29,9 @@
       <br/>
       <label for="siteType">Type</label>
       <select name="siteTypes" id="siteType">
-        <option value="Ahu">Ahu</option>
-        <option value="Hare paenga">Hare Paenga</option>
-        <option value="Moai">Moai</option>
-        <option value="Pukao">Pukao</option>
-        <option value="Umu">Umu</option>
-        <option value="Ana kionga#">Ana Kionga</option>
-        <option value="Mataa">Mataa</option>
-        <option value="Taupea">Taupea</option>
-        <option value="Manavai">Manavai</option>
-        <option value="Taheta">Taheta</option>
-        <option value="Tupa">Tupa</option>
+        {#each data.siteTypesArr as type}
+          <option value="{type}">{type}</option>
+        {/each}
       </select>
 
       {#if data.site.state == 0}
