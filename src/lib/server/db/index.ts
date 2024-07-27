@@ -1,5 +1,7 @@
 import type { Project, Park, SimHENUA } from './types';
 
+const siteTypesArray = ["Ahu", "Hare paenga", "Moai", "Pukao", "Umu", "Ana kionga", "Mataa", "Taupea", "Manavai", "Taheta", "Tupa"] as const;
+
 const KEY_PAGE_VISITS = 'pageVisits';
 const KEY_PROJECTS_BY_USER_EMAIL = 'projects:by-user-email:#';
 

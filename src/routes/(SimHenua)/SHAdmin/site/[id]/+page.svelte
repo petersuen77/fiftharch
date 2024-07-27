@@ -12,19 +12,19 @@
   <div class="p-4">
     <h1 class="text-lg font-semibold pb-3">SimHENUA Admin</h1>
 
-    <div class="text-medium font-medium">Site {site.zone}-{site.id}</div>
+    <div class="text-medium font-medium">Site {data.site.zone}-{data.site.id}</div>
 
     <form
       method="POST"
       class="pt-3 pb-3 mb-4"
       action="?/updateSite"
-      name="site_{site.id}"
+      name="site_{data.site.id}"
     >
-      {#if site.siteType}
+      {#if data.site.siteType}
         <div class="text-medium font-medium">{site.siteType}</div>
       {/if}
 
-      <a href="/SHAdmin/site/{site.id}">{site.zone}-{site.id}</a>
+      <a href="/SHAdmin/site/{data.site.id}">{data.site.zone}-{data.site.id}</a>
 
       <br/>
       <label for="siteType">Type</label>
@@ -42,11 +42,11 @@
         <option value="Tupa">Tupa</option>
       </select>
 
-      {#if site.state == 0}
+      {#if data.site.state == 0}
         <div>State: POOR</div>
-      {:else if site.state == 1}
+      {:else if data.site.state == 1}
         <div>State: NORMAL</div>
-      {:else if site.state == 2}
+      {:else if data.site.state == 2}
         <div>State: GOOD</div>
       {/if}
 

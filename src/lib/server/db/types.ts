@@ -22,5 +22,4 @@ export type Site = {
     state: number;
 };
 
-const siteTypesArray = ["Ahu", "Hare paenga", "Moai", "Pukao", "Umu", "Ana kionga", "Mataa", "Taupea", "Manavai", "Taheta", "Tupa"] as const;
 export type SiteType = typeof siteTypesArray[number];

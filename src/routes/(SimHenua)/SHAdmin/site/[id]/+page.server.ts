@@ -5,7 +5,8 @@ import { fail } from '@sveltejs/kit';
 import { error } from '@sveltejs/kit';
 
 import type { Park, Site, SiteType, SimHENUA } from '../../../lib/server/db/types';
-import { siteTypesArray } from '../../../lib/server/db/types';
+import type { siteTypesArray } from '../../../lib/server/db/index';
+
 
 const KEY_SIM_HENUA = 'SimHENUA';
 let game: SimHENUA;
@@ -21,7 +22,6 @@ export async function load({ params }) {
     if (site) {
         return {
             site: site,
-            siteTypesArr: siteTypesArray
         };
     }
 
