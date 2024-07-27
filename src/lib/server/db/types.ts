@@ -22,4 +22,4 @@ export type Site = {
     state: number;
 };
 
-export type SiteType = ["Ahu", "Taheta"];
+export type SiteType = ["Ahu", "Hare paenga", "Moai", "Pukao", "Umu", "Ana kionga", "Mataa", "Taupea", "Manavai", "Taheta", "Tupa"];
