@@ -12,7 +12,11 @@ import { kv } from '@vercel/kv';
 import { Redis } from "@upstash/redis";
 import { UpstashRedisAdapter } from "@auth/upstash-redis-adapter"
 
-export const handle = SvelteKitAuth({
+import { sequence } from '@sveltejs/kit/hooks';
+
+import { SHHelper } from "$lib/server/helper";
+
+export const firstHandle = SvelteKitAuth({
     adapter: UpstashRedisAdapter(kv),
     providers: [
         GitHub({ clientId: GITHUB_ID, clientSecret: GITHUB_SECRET }),
@@ -20,3 +24,14 @@ export const handle = SvelteKitAuth({
     ],
     debug: true,
 });
+
+/** @type {import('@sveltejs/kit').Handle} */
+export async function secondHandle({ event, resolve }) {
+    // Initialize the game.
+    await SHHelper.loadGame();
+
+    const response = await resolve(event);
+    return response;
+}
+
+export const handle = sequence(firstHandle, secondHandle);

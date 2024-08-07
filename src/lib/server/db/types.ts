@@ -5,6 +5,9 @@ export type Project = {
 };
 
 // SIMHENUA TYPES
+
+export const KEY_SIM_HENUA = 'SimHENUA';
+
 export type SimHENUA = {
     parks: Park[];
 };
@@ -22,4 +25,5 @@ export type Site = {
     state: number;
 };
 
+export const siteTypesArray = ["Ahu", "Hare paenga", "Moai", "Pukao", "Umu", "Ana kionga", "Mataa", "Taupea", "Manavai", "Taheta", "Tupa"] as const;
 export type SiteType = typeof siteTypesArray[number];

@@ -1,24 +1,15 @@
 import { kv } from '@vercel/kv'
+import { fail, error } from '@sveltejs/kit';
 
-import { fail } from '@sveltejs/kit';
-
-import { error } from '@sveltejs/kit';
-
-import type { Project, Park, SimHENUA } from '../../../../lib/server/db/types';
-
-const KEY_SIM_HENUA = 'SimHENUA';
-let game: SimHENUA;
+import type { SiteType } from '$lib/server/db/types';
+import { game, SHHelper } from "$lib/server/helper";
+import { siteTypesArray } from '$lib/server/db/types';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ params }) {
-    const park = await getParkFromDatabase(params.id);
-
-    if (park) {
-        if (!park.sites) park.sites = [];
-        return park;
-    }
-
-    error(404, 'Not found');
+    let parkId: number = params.id;
+    return SHHelper.getParkFromDB(parkId);
+    error(404, 'Park Not found');
 }
 
 export const actions = {
@@ -33,19 +24,11 @@ export const actions = {
         const parkId: number = data.get("addParkId");
         const siteZone: string = <string>data.get('addSiteZone');
         const siteId: number = data.get("addSiteId");
-        const park = await getParkFromDatabase(parkId);
-        console.log('Add new site ' + siteZone + '-' + siteId + ' to park ' + parkId);
 
-        if (!park.sites) park.sites = [];
-        if (!siteExists(park, siteId)) {
-            park.sites.push({ zone: siteZone, id: siteId });
-            try {
-                await kv.set(KEY_SIM_HENUA, game);
-            } catch (error) {
-                // Handle errors
-            }
-            return;
-        } else return fail(422, { addSiteId: siteId, error: 'Site ID already exists' });
+        const siteType: SiteType = siteTypesArray[0];
+        const siteState: number = 1;
+
+        SHHelper.addNewSite(parkId, siteZone, siteId, siteType, siteState);
     },
 
     updateSite: async ({ cookies, request }) => {
@@ -54,7 +37,8 @@ export const actions = {
         const parkId: number = data.get("parkId");
         const existingSiteId: string = <string>data.get('existingSiteId');
         const newSiteId: string = <string>data.get('siteId');
-        const park = await getParkFromDatabase(parkId);
+        game = await Helper.loadGame();
+        const park = await Helper.getParkFromDatabase(game, parkId);
 
         // Update site id.
         if (existingSiteId != newSiteId) {
@@ -85,7 +69,8 @@ export const actions = {
         const data = await request.formData();
         const parkId: number = data.get("parkId");
         const existingSiteId: string = <string>data.get('existingSiteId');
-        const park = await getParkFromDatabase(parkId);
+        game = await Helper.loadGame();
+        const park = await Helper.getParkFromDatabase(game, parkId);
         deleteSite(park, existingSiteId);
         try {
             await kv.set(KEY_SIM_HENUA, game);
@@ -93,44 +78,6 @@ export const actions = {
             // Handle errors
         }
     }
-};
-
-async function getParkFromDatabase(parkId: number) {
-    console.log("Getting parkId=" + parkId);
-    try {
-        // Load game
-        game = await kv.get(KEY_SIM_HENUA);
-        if (!game) {
-            game = { parks: [] }
-            try {
-                await kv.set(KEY_SIM_HENUA, game);
-            } catch (error) {
-                // Handle errors
-            }
-        }
-        //console.log("SimHENUA=" + game);
-
-        // Find park
-        let i = 0;
-        while (i < game.parks.length) {
-            if (game.parks[i].id == parkId)
-                return game.parks[i];
-            i++;
-        }
-        return false;
-    } catch (error) {
-        // Handle errors
-    }
-}
-
-function siteExists(park: Park, siteId: number) {
-    let i = 0;
-    while (i < park.sites.length) {
-        if (park.sites[i].id == siteId)
-            return true;
-        i++;
-    }
-    return false;
 }
 
 function getSite(park: Park, siteId: number) {

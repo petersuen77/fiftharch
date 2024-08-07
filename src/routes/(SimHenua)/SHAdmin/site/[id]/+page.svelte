@@ -20,17 +20,20 @@
       action="?/updateSite"
       name="site_{data.site.id}"
     >
-      {#if data.site.siteType}
-        <div class="text-medium font-medium">{site.siteType}</div>
-      {/if}
+      <input type="hidden" id="parkId" name="parkId" value={data.parkId} />
+      <input type="hidden" id="siteId" name="existingSiteId" value={data.site.id} />
 
       <a href="/SHAdmin/site/{data.site.id}">{data.site.zone}-{data.site.id}</a>
 
       <br/>
       <label for="siteType">Type</label>
-      <select name="siteTypes" id="siteType">
+      <select name="siteType" id="siteType">
         {#each data.siteTypesArr as type}
-          <option value="{type}">{type}</option>
+          {#if data.site.siteType==type}
+            <option selected="true" value="{type}">{type}</option>
+          {:else}
+            <option value="{type}">{type}</option>
+          {/if}
         {/each}
       </select>
 
