@@ -7,7 +7,12 @@
 <div class="flex items-top justify-center h-screen w-[60%] m-4">
 
   <!-- LEFT BAR -->
-  <div class="bg-gray-100 p-4 w-[300px] rounded"></div>
+  <div class="bg-gray-100 p-4 w-[300px] rounded">
+    <a href="/SHHome">HOME</a>
+    <br/>
+    <a href="/SHAdmin">ADMIN</a>
+    <br/>
+  </div>
 
   <!-- RIGHT/MAIN CONTENT -->
   <div class="p-4">

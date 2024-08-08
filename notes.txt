@@ -21,7 +21,7 @@ DEPLOYMENT
 
 * Set production environment variables in Vercel; make sure they are tied to the Vercel fiftharch project.
 
-* Use "vercel --prod" to deploy
+* Use "vercel --prod" to deploy from cmd window
 
 ==================================
 LOCAL ENVIRONMENT SETUP
