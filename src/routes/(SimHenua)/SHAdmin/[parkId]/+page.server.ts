@@ -1,13 +1,13 @@
 import { kv } from '@vercel/kv'
 import { fail, error } from '@sveltejs/kit';
 
-import type { SiteType } from '$lib/server/db/types';
+import type { SiteType, SiteState } from '$lib/server/db/types';
 import { game, SHHelper } from "$lib/server/helper";
-import { siteTypesArray } from '$lib/server/db/types';
+import { siteTypesArray, siteStatesArray } from '$lib/server/db/types';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ params }) {
-    let parkId: number = params.id as unknown as number;
+    let parkId: number = params["parkId"] as unknown as number;
     return SHHelper.getParkFromDB(parkId);
     error(404, 'Park Not found');
 }
@@ -26,7 +26,7 @@ export const actions = {
         const siteId: number = data.get("addSiteId") as unknown as number;
 
         const siteType: SiteType = siteTypesArray[0];
-        const siteState: number = 1;
+        const siteState: SiteState = siteStatesArray[1];
 
         return SHHelper.addNewSite(parkId, siteZone, siteId, siteType, siteState);
     },
@@ -39,7 +39,7 @@ export const actions = {
         const newSiteId: number = data.get('siteId') as unknown as number;
         const newSiteZone: string = <string>data.get('siteZone');
 
-        SHHelper.updateSite(parkId, newSiteZone, existingSiteId, newSiteId, null);
+        SHHelper.updateSite(parkId, newSiteZone, existingSiteId, newSiteId, null, null);
     },
 
     deleteSite: async ({ cookies, request }) => {

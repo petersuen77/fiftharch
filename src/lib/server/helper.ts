@@ -1,7 +1,7 @@
 import { kv } from '@vercel/kv'
 import { error, fail } from '@sveltejs/kit';
-import type { Park, Site, SiteType, SimHENUA } from '$lib/server/db/types';
-import { KEY_SIM_HENUA, siteTypesArray } from '$lib/server/db/types';
+import type { Park, Site, SiteType, SiteState, SimHENUA } from '$lib/server/db/types';
+import { KEY_SIM_HENUA, siteTypesArray, siteStatesArray } from '$lib/server/db/types';
 
 export let game: SimHENUA | null;
 
@@ -128,7 +128,7 @@ export class SHHelper {
     // SITE FUNCTIONS
     // *******************************
 
-    static addNewSite(parkId: number, siteZone: string, siteId: number, siteType: SiteType, siteState: number) {
+    static addNewSite(parkId: number, siteZone: string, siteId: number, siteType: SiteType, siteState: SiteState) {
         console.log('Add new site ' + siteZone + '-' + siteId + ' to park ' + parkId);
         if (!game) throw new Error("SimHENUA game not initialized");
         let park: Park | null = this.getParkFromDB(parkId);
@@ -140,7 +140,9 @@ export class SHHelper {
         } else return fail(422, { addSiteId: siteId, error: 'Site ID already exists' });
     }
 
-    static updateSite(parkId: number, newSiteZone: string | null, existingSiteId: number, newSiteId: number | null, newSiteType:SiteType | null) {
+    static async updateSite(parkId: number, newSiteZone: string | null, existingSiteId: number | null, newSiteId: number | null, newSiteType: SiteType | null, 
+        newSiteState: SiteState | null) {
+        
         console.log('Update site ' + existingSiteId + '-' + existingSiteId + ' for park ' + parkId);
         if (!game) throw new Error("SimHENUA game not initialized");
 
@@ -163,8 +165,11 @@ export class SHHelper {
         // Update type
         if (newSiteType && (newSiteType != site.siteType)) site.siteType = newSiteType;
 
+        // Update state
+        if (newSiteState && (newSiteState != site.state)) site.state = newSiteState;
+
         // Save
-        this.saveGame();
+        await this.saveGame();
     }
 
     static getSiteFromDB(parkId: number, siteId: number): Site | null {

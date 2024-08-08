@@ -26,7 +26,7 @@
               class="gray-700 text-sm font-medium mb-2 pr-2"
               for="site{site.id}"
             >
-              <a href="/SHAdmin/site/{data.id}_{site.id}">{site.zone}-{site.id}</a
+              <a href="/SHAdmin/{data.id}/{site.id}">{site.zone}-{site.id}</a
               >:
             </label>
 

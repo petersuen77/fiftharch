@@ -23,7 +23,7 @@
               class="gray-700 text-sm font-medium mb-2 pr-2"
               for="parkName"
             >
-              <a href="/SHAdmin/park/{park.id}">Park {park.id}</a>:
+              <a href="/SHAdmin/{park.id}">Park {park.id}</a>:
             </label>
 
             {#if form?.error}
