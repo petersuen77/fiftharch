@@ -7,7 +7,7 @@ import { siteTypesArray } from '$lib/server/db/types';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ params }) {
-    let parkId: number = params.id;
+    let parkId: number = params.id as unknown as number;
     return SHHelper.getParkFromDB(parkId);
     error(404, 'Park Not found');
 }
@@ -21,85 +21,34 @@ export const actions = {
     addSite: async ({ cookies, request }) => {
         // Add a new site
         const data = await request.formData();
-        const parkId: number = data.get("addParkId");
+        const parkId: number = data.get("addParkId") as unknown as number;
         const siteZone: string = <string>data.get('addSiteZone');
-        const siteId: number = data.get("addSiteId");
+        const siteId: number = data.get("addSiteId") as unknown as number;
 
         const siteType: SiteType = siteTypesArray[0];
         const siteState: number = 1;
 
-        SHHelper.addNewSite(parkId, siteZone, siteId, siteType, siteState);
+        return SHHelper.addNewSite(parkId, siteZone, siteId, siteType, siteState);
     },
 
     updateSite: async ({ cookies, request }) => {
         // Update site    
         const data = await request.formData();
-        const parkId: number = data.get("parkId");
-        const existingSiteId: string = <string>data.get('existingSiteId');
-        const newSiteId: string = <string>data.get('siteId');
-        game = await Helper.loadGame();
-        const park = await Helper.getParkFromDatabase(game, parkId);
+        const parkId: number = data.get("parkId") as unknown as number;
+        const existingSiteId: number = data.get('existingSiteId') as unknown as number;
+        const newSiteId: number = data.get('siteId') as unknown as number;
+        const newSiteZone: string = <string>data.get('siteZone');
 
-        // Update site id.
-        if (existingSiteId != newSiteId) {
-            if (!siteExists(park, newSiteId)) {
-                const site = getSite(park, existingSiteId);
-                site.id = newSiteId;
-                try {
-                    await kv.set(KEY_SIM_HENUA, game);
-                } catch (error) {
-                    // Handle errors
-                }
-            } else return fail(422, { siteId: existingSiteId, error: 'Site ID already exists' });
-        }
-
-        // Update zone id.
-        const siteZone: string = <string>data.get('siteZone');
-        const site = getSite(park, existingSiteId);
-        site.zone = siteZone;
-        try {
-            await kv.set(KEY_SIM_HENUA, game);
-        } catch (error) {
-            // Handle errors
-        }
+        SHHelper.updateSite(parkId, newSiteZone, existingSiteId, newSiteId, null);
     },
 
     deleteSite: async ({ cookies, request }) => {
         // Delete site.
         const data = await request.formData();
-        const parkId: number = data.get("parkId");
-        const existingSiteId: string = <string>data.get('existingSiteId');
-        game = await Helper.loadGame();
-        const park = await Helper.getParkFromDatabase(game, parkId);
-        deleteSite(park, existingSiteId);
-        try {
-            await kv.set(KEY_SIM_HENUA, game);
-        } catch (error) {
-            // Handle errors
-        }
+        const parkId: number = data.get("parkId") as unknown as number;
+        const existingSiteId: number = <string>data.get('existingSiteId') as unknown as number;;
+        SHHelper.deleteSite(parkId, existingSiteId);
     }
-}
-
-function getSite(park: Park, siteId: number) {
-    let i = 0;
-    while (i < park.sites.length) {
-        if (park.sites[i].id == siteId)
-            return park.sites[i];
-        i++;
-    }
-    return;
-}
-
-function deleteSite(park: Park, siteId: number) {
-    let i = 0;
-    while (i < park.sites.length) {
-        if (park.sites[i].id == siteId) {
-            park.sites.splice(i, 1);
-            return true;
-        }
-        i++;
-    }
-    return false;
 }
 
 

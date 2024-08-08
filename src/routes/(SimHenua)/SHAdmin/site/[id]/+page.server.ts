@@ -4,21 +4,18 @@ import { fail } from '@sveltejs/kit';
 
 import { error } from '@sveltejs/kit';
 
-import type { Park, Site, SiteType, SimHENUA } from '$lib/server/db/types';
+import type { Site, SiteType } from '$lib/server/db/types';
 import { KEY_SIM_HENUA, siteTypesArray } from '$lib/server/db/types';
-import { SHHelper } from "$lib/server/helper.js";
-
-let game: SimHENUA;
+import { SHHelper } from "$lib/server/helper";
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ params }) {
     // Parse id into park and site id
     const parts = params.id.split("_");
-    const parkId = parts[0];
-    const siteId = parts[1];
+    const parkId: number = parts[0] as unknown as number;
+    const siteId: number = parts[1] as unknown as number;
 
-    game = await Helper.loadGame();
-    const site = await Helper.getSiteFromDatabase(game, parkId, siteId);
+    let site:Site | null = SHHelper.getSiteFromDB(parkId, siteId);
 
     if (site) {
         return {
@@ -28,57 +25,22 @@ export async function load({ params }) {
         };
     }
 
-    error(404, 'Not found');
+    return error(404, 'Site ' + siteId + ' not found');
 }
 
 export const actions = {
     updateSite: async ({ cookies, request }) => {
         // Update site    
         const data = await request.formData();
-        const parkId: number = data.get("parkId");
-        const existingSiteId: number = data.get('existingSiteId');
+        const parkId: number = data.get("parkId") as unknown as number;
+        const existingSiteId: number = data.get('existingSiteId') as unknown as number;
         const newSiteId: string = <string>data.get('siteId');
-        game = await Helper.loadGame();
-        const park = await Helper.getParkFromDatabase(game, parkId);
-        const site = await Helper.getSiteFromDatabase(game, parkId, existingSiteId);
-
-        // Update site id.
-        /*
-        if (existingSiteId != newSiteId) {
-            if (!siteExists(park, newSiteId)) {
-                const site = getSite(park, existingSiteId);
-                site.id = newSiteId;
-                try {
-                    await kv.set(KEY_SIM_HENUA, game);
-                } catch (error) {
-                    // Handle errors
-                }
-            } else return fail(422, { siteId: existingSiteId, error: 'Site ID already exists' });
-        }
-
-        // Update zone id.
-        const siteZone: string = <string>data.get('siteZone');
-        const site = getSite(park, existingSiteId);
-        site.zone = siteZone;
-        try {
-            await kv.set(KEY_SIM_HENUA, game);
-        } catch (error) {
-            // Handle errors
-        }*/
-        
+                
         // Update site type.
-        const newSiteType: string = <string>data.get('siteType');
-        if (newSiteType != site.siteType) {
-            console.log('Changing site type to:' + newSiteType);
-            site.siteType = newSiteType;
-            try {
-                await kv.set(KEY_SIM_HENUA, game);
-            } catch (error) {
-                // Handle errors
-            }
-        }
+        const newSiteType: SiteType = <string>data.get('siteType') as unknown as SiteType;
+        SHHelper.updateSite(parkId, null, existingSiteId, null, newSiteType);
     }
-}
+};
 
 
 

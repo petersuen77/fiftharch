@@ -26,14 +26,14 @@ export const actions = {
         // Update park    
         const data = await request.formData();
         const newParkName: string = <string>data.get('parkName');
-        const parkId: number = <number>data.get('parkId');
+        const parkId: number = data.get('parkId') as unknown as number;
         return SHHelper.updatePark(parkId, newParkName);
     },
 
     deletePark: async ({ cookies, request }) => {
         // Delete park 
         const data = await request.formData();
-        const parkId: number = <number>data.get('parkId');
+        const parkId: number = data.get('parkId') as unknown as number;
         return SHHelper.deletePark(parkId);
     }
 };

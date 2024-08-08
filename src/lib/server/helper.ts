@@ -140,13 +140,40 @@ export class SHHelper {
         } else return fail(422, { addSiteId: siteId, error: 'Site ID already exists' });
     }
 
-    static getSiteFromDB(parkId: number, siteId: number) {
+    static updateSite(parkId: number, newSiteZone: string | null, existingSiteId: number, newSiteId: number | null, newSiteType:SiteType | null) {
+        console.log('Update site ' + existingSiteId + '-' + existingSiteId + ' for park ' + parkId);
+        if (!game) throw new Error("SimHENUA game not initialized");
+
+        let park:Park | null = this.getParkFromDB(parkId);
+        if (!park) return fail(422, { parkId: parkId, error: 'parkId ' + parkId + ' not found' });
+        
+        let site: Site | null = this.getSiteFromDB(parkId, existingSiteId);
+        if (!site) return fail(422, { existingSiteId: existingSiteId, error: 'existingSiteId ' + existingSiteId + ' not found' });
+
+        // Update site id.
+        if (newSiteId && (existingSiteId != newSiteId)) {
+            if (!this.siteExists(park, newSiteId)) {
+                site.id = newSiteId;
+            } else return fail(422, { siteId: existingSiteId, error: 'Site ID already exists' });
+        }
+
+        // Update zone
+        if (newSiteZone && (newSiteZone != site.zone)) site.zone = newSiteZone;
+
+        // Update type
+        if (newSiteType && (newSiteType != site.siteType)) site.siteType = newSiteType;
+
+        // Save
+        this.saveGame();
+    }
+
+    static getSiteFromDB(parkId: number, siteId: number): Site | null {
         console.log("Getting siteId=" + siteId + " from parkId=" + parkId);
         if (!game) throw new Error("SimHENUA game not initialized");
         try {
             // Find park
             let park = SHHelper.getParkFromDB(parkId);
-            if (!park) return;
+            if (!park) return null;
 
             // Find site
             let i = 0;
@@ -155,17 +182,36 @@ export class SHHelper {
                     return park.sites[i];
                 i++;
             }
-            return null;
         } catch (error) {
             // Handle errors
         }
+        return null;
     }
 
-    static siteExists(park: Park | null, siteId: number) {
+    static siteExists(park: Park, siteId: number) {
         let i = 0;
         while (i < park.sites.length) {
             if (park.sites[i].id == siteId)
                 return true;
+            i++;
+        }
+        return false;
+    }
+
+    static deleteSite(parkId: number, siteId: number) {
+        console.log("Delete site " + siteId + " from parkId=" + parkId);
+        if (!game) throw new Error("SimHENUA game not initialized");
+
+        let park: Park | null = this.getParkFromDB(parkId);
+        if (!park) return fail(422, { parkId: parkId, error: 'parkId ' + parkId + ' not found' });
+
+        let i = 0;
+        while (i < park.sites.length) {
+            if (park.sites[i].id == siteId) {
+                park.sites.splice(i, 1);
+                this.saveGame();
+                return true;
+            }
             i++;
         }
         return false;
