@@ -11,6 +11,38 @@
     <br/>
     <a href="/SHAdmin">ADMIN</a>
     <br/>
+
+    <br/>
+    {#if data.parks!==undefined}
+      <h2>PARKS:</h2>
+      <ul>
+        {#each data.parks as park}
+          <li>
+            {#if park.id==data.parkId}
+              <a href="/SHAdmin/{park.id}" class="text-green-500">{park.name}</a>
+            {:else}
+              <a href="/SHAdmin/{park.id}">{park.name}</a>
+            {/if}
+          </li>
+        {/each}
+      </ul>
+    {/if}
+
+    <br/>
+    {#if data.sites!==undefined}
+      <h2>SITES:</h2>
+      <ul>
+        {#each data.sites as site}
+          <li>
+            {#if site.id==data.site.id && site.zone==data.site.zone}
+              <a href="/SHAdmin/{data.parkId}/{site.id}" class="text-green-500">{site.zone}-{site.id}</a>
+            {:else}
+              <a href="/SHAdmin/{data.parkId}/{site.id}">{site.zone}-{site.id}</a>
+            {/if}
+          </li>
+        {/each}
+      </ul>
+    {/if}
   </div>
 
   <!-- RIGHT/MAIN CONTENT -->

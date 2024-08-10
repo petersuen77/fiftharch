@@ -11,28 +11,44 @@
     <br/>
     <a href="/SHAdmin">ADMIN</a>
     <br/>
+
+    <br/>
+    {#if data.parks!==undefined}
+      <h2>PARKS:</h2>
+      <ul>
+        {#each data.parks as park}
+          <li>
+            {#if park.id==data.park?.id}
+              <a href="/SHAdmin/{park.id}" class="text-green-500">{park.name}</a>
+            {:else}
+              <a href="/SHAdmin/{park.id}">{park.name}</a>
+            {/if}
+          </li>
+        {/each}
+      </ul>
+    {/if}
+
   </div>
 
   <!-- RIGHT/MAIN CONTENT -->
   <div class="p-4">
     <h1 class="text-lg font-semibold pb-3">SimHENUA Admin</h1>
 
-    <div class="text-medium font-medium">Park {data.id}</div>
-    <div class="text-medium font-medium">{data.name}</div>
+    <div class="text-medium font-medium">Park {data.park?.id}</div>
+    <div class="text-medium font-medium">{data.park?.name}</div>
 
     <!--List of Sites -->
     <br/>
     <div class="text-medium font-medium">Sites</div>
     <ul>
-      {#each data.sites as site}
+      {#each data.park.sites as site}
         <li>
           <form method="POST" class="pt-3 pb-3 mb-4" action="?/updateSite" name="site_{site.id}">
             <label
               class="gray-700 text-sm font-medium mb-2 pr-2"
               for="site{site.id}"
             >
-              <a href="/SHAdmin/{data.id}/{site.id}">{site.zone}-{site.id}</a
-              >:
+              <a href="/SHAdmin/{data.park?.id}/{site.id}">{site.zone}-{site.id}</a>:
             </label>
 
             {#if form?.error && form?.siteId==site.id}
@@ -64,7 +80,7 @@
               required
             />
 
-            <input type="hidden" id="parkId" name="parkId" value={data.id} />
+            <input type="hidden" id="parkId" name="parkId" value={data.park?.id} />
             <input type="hidden" id="existingSiteId" name="existingSiteId" value={site.id} />
 
             <button
@@ -121,7 +137,7 @@
         required
       />
 
-      <input type="hidden" id="addParkId" name="addParkId" value={data.id} />
+      <input type="hidden" id="addParkId" name="addParkId" value={data.park?.id} />
 
       <button
         class="bg-blue-500 hover:bg-blue-700 text-white font-bold mt-2 py-2 px-4 rounded focus:outline-none focus:shadow-outline"

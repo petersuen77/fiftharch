@@ -8,8 +8,14 @@ import { siteTypesArray, siteStatesArray } from '$lib/server/db/types';
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ params }) {
     let parkId: number = params["parkId"] as unknown as number;
-    return SHHelper.getParkFromDB(parkId);
-    error(404, 'Park Not found');
+    try {
+        return {
+            park: SHHelper.getParkFromDB(parkId),
+            parks: game?.parks
+        }
+    } catch {
+        error(404, 'Park Not found');
+    }
 }
 
 export const actions = {

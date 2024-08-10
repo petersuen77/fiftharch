@@ -2,9 +2,9 @@ import { kv } from '@vercel/kv'
 
 import { fail, error, redirect } from '@sveltejs/kit';
 
-import type { Site, SiteType, SiteState } from '$lib/server/db/types';
+import type { Park, Site, SiteType, SiteState } from '$lib/server/db/types';
 import { KEY_SIM_HENUA, siteTypesArray, siteStatesArray } from '$lib/server/db/types';
-import { SHHelper } from "$lib/server/helper";
+import { SHHelper, game } from "$lib/server/helper";
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ params }) {
@@ -12,14 +12,17 @@ export async function load({ params }) {
     const parkId: number = params["parkId"] as unknown as number;
     const siteId: number = params["siteId"] as unknown as number;
 
+    let park: Park | null = SHHelper.getParkFromDB(parkId);
     let site:Site | null = SHHelper.getSiteFromDB(parkId, siteId);
 
-    if (site) {
+    if (site && park && game) {
         return {
             site: site,
             parkId: parkId,
             siteTypesArr: siteTypesArray,
-            siteStatesArr: siteStatesArray
+            siteStatesArr: siteStatesArray,
+            sites: park?.sites,
+            parks: game.parks
         };
     }
 
