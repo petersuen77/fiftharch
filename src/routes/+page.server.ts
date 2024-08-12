@@ -1,8 +1,5 @@
-import {
-  kv
-} from '@vercel/kv'
-
 import { getPageVisitsKey } from '$lib/server/db' 
+import { kv } from '$lib/server/db';
 
 /** @type {import('./$types').PageLoad} */
 export async function load() {

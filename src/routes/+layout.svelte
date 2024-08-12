@@ -1,5 +1,5 @@
 <script>
-	import "../../app.css";
+	import "../app.css";
 	import { page } from "$app/stores"
 </script>
 
@@ -35,12 +35,15 @@
         {/if}
       </p>
     </div>
+    <!--
     <nav>
       <ul class="navItems">
         <li class="navItem"><a href="/">Home</a></li>
         <li class="navItem"><a href="/protected">Protected</a></li>
       </ul>
     </nav>
+    -->
+    <br/>
   </header>
 
   <div class="flex h-full">
@@ -74,6 +77,7 @@
   :global(li),
   :global(p) {
     line-height: 1.5rem;
+    
   }
   :global(a) {
     font-weight: 500;

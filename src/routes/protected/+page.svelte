@@ -4,10 +4,11 @@
 	export let form;
 </script>
 
-<div class="sidebar lg:left-0 p-2 w-[250px] overflow-y-auto bg-gray-100">
-   	<div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
+<div class="sidebar lg:left-0 p-2 w-[250px] overflow-y-auto bg-gray-100 rounded-lg">
+   	<div class="h-full px-3 py-2 overflow-y-auto dark:bg-gray-800">
+		
 		<div class="p-2.5 mt-1 flex items-center">
-			Sidebar
+			<!--Sidebar -->
 		</div>
 	
 		<form method="POST" class="bg-white shadow-md rounded px-3 pt-3 pb-3 mb-4">
@@ -57,22 +58,26 @@
 	</div>
 </div>
 
-<div class="p-4 ">
+<div class="p-4">
+	<!-- Session Test Info
 	<h1>User Page</h1>
 	<p>
 		This is a protected content. You can access this content because you are
 		signed in.
 	</p>
 	<p>Session expiry: {$page.data.session?.expires}</p>
+	-->
 
-	<div>
-		<h1>Projects</h1>
-		<ul class="projects">
-			{#each data.projects as project}
-				<li>
-					{project}
-				</li>
-			{/each}
+	<div class="">
+		<h1 class="font-semibold">Projects</h1>
+		<ul class="list-disc">
+			{#if Array.isArray(data.projects)}
+				{#each data.projects as project}
+					<li class="list-inside">
+						{project}
+					</li>
+				{/each}
+			{/if}
 		</ul>
 	</div>
 </div>

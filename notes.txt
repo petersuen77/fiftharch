@@ -3,10 +3,7 @@ RUNNING LOCALLY
 
 * Run with "npm run dev" instead of "vercel dev" because the latter causes CORS errors. 
 
-* However, running without "vercel dev" causes @vercel/kv to not work (bc KV env variables are not loaded right). See solution below.
-
-* KV Environment Variables
-- Set KV variables in CMD console because they are not read from .env or .env.development.local files right by Vite
+* If necessary, KV Environment Variables can be set in command line:
 
 CMD shell
 Set KV_REST_API_URL="https://immortal-tetra-33951.kv.vercel-storage.com"
@@ -19,29 +16,39 @@ $env:KV_REST_API_TOKEN="AYSfASQgNDVlYjMzYmUtMGJjNy00YWFkLWIyOGUtODMxMGVjMzUwZDRj
 ==================================
 DEPLOYMENT
 
-* Set production environment variables in Vercel; make sure they are tied to the Vercel fiftharch project.
+* Check and set production environment variables in Vercel; make sure they are tied to the Vercel fiftharch project.
 
 * Use "vercel --prod" to deploy from cmd window
 
+
 ==================================
-LOCAL ENVIRONMENT SETUP
+ENVIRONMENT SETUP
 
-* Download & install Visual Studio Code (https://code.visualstudio.com/download). Install "Svelte for VS Code" and "Tailwind CSS IntelliSense".
+* Install Visual Studio Code (https://code.visualstudio.com/download). Install "Svelte for VS Code" and "Tailwind CSS IntelliSense".
 
-* Setup Git: https://git-scm.com/download. Clone fiftharch Github repo: https://github.com/petersuen77/fiftharch.git. Branch it locally. 
-    * Also make sure you have a github account.
+* Install Git: https://git-scm.com/download.
 
 * Install node.js (https://nodejs.org/en/download/prebuilt-installer), which seems to also include npm (otherwise install npm).
 
 * Install latest PowerShell on Windows and restart.
 
+* Set CNAME record in godaddy.com for dev.fiftharch.com to point to "cname.vercel-dns.com.".
+
+* In Vercel, start with a sveltekit/KV project template and clone it, calling it fiftharch. This will automatically create a new github repository called fiftharch.
+
+* In VSCode, log into the github account and clone the repository. This will create the local folder for the repository. 
+  https://code.visualstudio.com/docs/sourcecontrol/github#_getting-started-with-github-pull-requests-and-issues
+
 * In VScode terminal (can be PowerShell) 
     * Run "npm install" to install all package dependencies.
     * Run "vercel login" with github credentials.
+    * Run "vercel link" to link to fifharch project.
     * Run "vercel env pull" to get online Vercel env variables into local .env file.
     * Test running server locally (see above)  
 
-* Install Redis Insight to view KV database. Use "immortal-tetra-33951.kv.vercel-storage.com:33951" to connect to fiftharch KV.
+* Install Redis Insight to view KV database. 
+  * Use "immortal-tetra-33951.kv.vercel-storage.com" as host and "33951" as port to connect to fiftharch KV.
+  * Use "default" username and KV_REST_API_TOKEN as password.
 
 
 ==================================
@@ -56,3 +63,6 @@ https://console.cloud.google.com/apis/credentials?project=fifth-arch-17045827927
 
 GitHub OAuth API
 https://github.com/settings/developers
+
+Authentication with Cookies
+https://joyofcode.xyz/sveltekit-authentication-using-cookies

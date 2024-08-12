@@ -30,6 +30,7 @@
     "@auth/upstash-redis-adapter": "^1.0.13",
     "@upstash/redis": "^1.28.0",
     "@vercel/kv": "^0.2.1",
+    "crawler-request": "^1.2.2",
     "dotenv": "^16.3.1"
   }
 }
