@@ -8,10 +8,11 @@ let projects: string[];
 (!module.parent), and module only has a parent if crawler-request is run as a script than as a module. So using import 
 causes the wrong behavior where parent is null, but it should not be, bc it is being run in this app. Which means we need 
 to next lines of code to import "require".
-*/
+
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url)
-const crawler = require('../../../node_modules/crawler-request');
+const crawler = require('crawler-request');
+*/
 
 export const load = async (event) => {
     const session = await event.locals.getSession();
@@ -22,12 +23,12 @@ export const load = async (event) => {
     const docId = googleDriveUrl.split("/")[5]
     const downloadUrl = 'https://drive.google.com/uc?id=' + docId + '&export=download';
 
-    /* Test code for using pdf parser*/
+    /* Test code for using pdf parser
     crawler(downloadUrl).then(function (response) {
         // handle response
         let parts = response.text.split("\n");
         console.log(response.text.lenght);
-    });
+    });*/
     
     let ret = await Helper.getUserProjectNames(email);
     return {
