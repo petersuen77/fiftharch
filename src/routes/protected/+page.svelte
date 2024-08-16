@@ -4,11 +4,12 @@
 	export let form;
 </script>
 
+<!--Sidebar -->
 <div class="sidebar lg:left-0 p-2 w-[250px] overflow-y-auto bg-gray-100 rounded-lg">
    	<div class="h-full px-3 py-2 overflow-y-auto dark:bg-gray-800">
 		
 		<div class="p-2.5 mt-1 flex items-center">
-			<!--Sidebar -->
+			
 		</div>
 	
 		<form method="POST" class="bg-white shadow-md rounded px-3 pt-3 pb-3 mb-4">
@@ -48,10 +49,11 @@
 			/>
 			<div class="flex">
 				<button
-					class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+					class="buttonPrimary inline-block align-middle"
 					type="submit"
 				>
-					Add
+					<img src='/icons/expand-plus-icon.png' alt="+" class="inline-block"/>
+					<span  class="align-middle pl-1">Add</span>
 				</button>
 			</div>
 		</form>
@@ -74,7 +76,7 @@
 			{#if Array.isArray(data.projects)}
 				{#each data.projects as project}
 					<li class="list-inside">
-						{project}
+						<a href="/protected/{project}/">{project}</a>
 					</li>
 				{/each}
 			{/if}

@@ -60,4 +60,25 @@ export class Helper {
             }
         } else return fail(422, { projectName: projectName, error: 'Project already exists' });
     }
+
+    static async deleteUserProject(projectName: string, userEmail: string) {
+        if (!userEmail || !projectName) return false;
+        console.log("deleteUserProject: " + userEmail);
+        console.log('   User email= ' + userEmail + ", key= '" + userEmail);
+        console.log('   Project name= ' + projectName);
+
+        let userProjects = await this.getUserProjectNames(userEmail);
+        if (Array.isArray(userProjects)) {
+            const index = userProjects.indexOf(projectName);
+            let ret = userProjects.splice(index, 1);
+            const key = getProjectNamesByUserEmailKey(userEmail);
+            try {
+                await kv.set(key, userProjects);
+                return ret;
+            } catch (error) {
+                // Handle errors
+            }
+        }
+        return [];
+    }
 }

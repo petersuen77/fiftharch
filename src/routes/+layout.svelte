@@ -81,6 +81,7 @@
   }
   :global(a) {
     font-weight: 500;
+    color: #ff8800;
   }
   :global(hr) {
     border: 1px solid #ddd;
@@ -140,29 +141,29 @@
     background-size: cover;
     background-repeat: no-repeat;
   }
-  .button,
-  .buttonPrimary {
+  :global(.button,
+  .buttonPrimary) {
     float: right;
     margin-right: -0.4rem;
     font-weight: 500;
     border-radius: 0.3rem;
     cursor: pointer;
     font-size: 1rem;
-    line-height: 1.4rem;
-    padding: 0.7rem 0.8rem;
+    line-height: 1.0rem;
+    padding: 0.5rem 0.5rem;
     position: relative;
     z-index: 10;
     background-color: transparent;
     color: #555;
   }
-  .buttonPrimary {
-    background-color: #346df1;
-    border-color: #346df1;
-    color: #fff;
+  :global(.buttonPrimary) {
+    border-width: 1px;
+    background-color: #f6f8fa;
+    border-color: #d0d7de;
+    color: #24292f;
     text-decoration: none;
-    padding: 0.7rem 1.4rem;
   }
-  .buttonPrimary:hover {
+  :global(.buttonPrimary:hover) {
     box-shadow: inset 0 0 5rem rgba(0, 0, 0, 0.2);
   }
   .navItems {
