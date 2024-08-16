@@ -11,7 +11,7 @@ to next lines of code to import "require".
 */
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url)
-const crawler = require('crawler-request');
+const crawler = require('../../../node_modules/crawler-request');
 
 export const load = async (event) => {
     const session = await event.locals.getSession();
@@ -22,12 +22,12 @@ export const load = async (event) => {
     const docId = googleDriveUrl.split("/")[5]
     const downloadUrl = 'https://drive.google.com/uc?id=' + docId + '&export=download';
 
-    /* Test code for using pdf parser
+    /* Test code for using pdf parser*/
     crawler(downloadUrl).then(function (response) {
         // handle response
         let parts = response.text.split("\n");
         console.log(response.text.lenght);
-    });*/
+    });
     
     let ret = await Helper.getUserProjectNames(email);
     return {
