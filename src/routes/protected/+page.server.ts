@@ -11,7 +11,7 @@ to next lines of code to import "require".
 */
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url)
-const crawler = require('crawler-request');
+//const crawler = require('crawler-request');
 
 export const load = async (event) => {
     const session = await event.locals.getSession();
@@ -27,8 +27,8 @@ export const load = async (event) => {
         // handle response
         let parts = response.text.split("\n");
         console.log(response.text.lenght);
-    });
-    */
+    });*/
+    
     let ret = await Helper.getUserProjectNames(email);
     return {
         projects: ret
