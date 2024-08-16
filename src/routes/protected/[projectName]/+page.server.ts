@@ -35,6 +35,6 @@ export const actions = {
         const deletedProject = await Helper.deleteUserProject(projectName, userEmail);
         if (Array.isArray(deletedProject) && deletedProject.length == 0 && deletedProject[0] == projectName)
             error(404, 'Error in deleting project ' + projectName);
-        throw redirect(303, '/protected');
+        redirect(303, '/protected');
     },
 };

@@ -29,9 +29,9 @@ export const load = async (event) => {
         console.log(response.text.lenght);
     });
     */
-    
+    let ret = await Helper.getUserProjectNames(email);
     return {
-        projects: Helper.getUserProjectNames(email)
+        projects: ret
     };
 };
 

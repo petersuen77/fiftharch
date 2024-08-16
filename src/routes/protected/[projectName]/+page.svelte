@@ -1,16 +1,11 @@
 <script lang="ts">
-	import { pushState } from '$app/navigation';
 	import { page } from '$app/stores';
-	import Modal from 'svelte/Modal.svelte';
 
 	export let data;
 	export let form;
-
-	function showModal() {
-		pushState('', {
-			showModal: true
-		});
-	}
+	
+	let deleteConfirmed:boolean = false;
+	
 </script>
 
 <!--Sidebar -->
@@ -79,7 +74,7 @@
 <div class="p-4">
 	<h1>{$page.error?.message ?? ''}</h1>
 	<form method="POST" class="px-3 pb-3 mb-4">
-		<h1 class="font-semibold text-l">{data.prj.name}</h1>
+		<h1 class="font-semibold text-xl">{data.prj.name}</h1>
 		
 		<input
 			type="hidden"
@@ -94,12 +89,12 @@
 			value={$page.params.projectName}
 		/>
 
-		<br />
+		<br/>
 		<button
 			class="buttonPrimary inline-block align-middle"
 			type="submit"
-			on:click="{showModal}"
 			formaction="?/deleteProject"
+			disabled={!deleteConfirmed}
 		>
 			<img
 				src="/icons/close-window-icon.png"
@@ -108,5 +103,10 @@
 			/>
 			<span class="align-middle pl-1">Delete Project</span>
 		</button>
+
+		<div class="pl-1">
+			<input type="checkbox" id="confirm_delete"  on:click={() => deleteConfirmed=!deleteConfirmed}>
+			<label for="confirm_delete">Confirm Delete</label>
+		</div>
 	</form>
 </div>

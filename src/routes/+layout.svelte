@@ -164,7 +164,12 @@
     text-decoration: none;
   }
   :global(.buttonPrimary:hover) {
-    box-shadow: inset 0 0 5rem rgba(0, 0, 0, 0.2);
+    background-color: #e2e2e2;
+  }
+  :global(button:disabled, button[disabled]) {
+    cursor:default;
+    box-shadow: none;
+    background-color: #e2e2e2;
   }
   .navItems {
     margin-bottom: 2rem;
