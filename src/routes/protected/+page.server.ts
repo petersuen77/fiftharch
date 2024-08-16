@@ -11,7 +11,7 @@ to next lines of code to import "require".
 */
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url)
-//const crawler = require('crawler-request');
+const crawler = require('crawler-request');
 
 export const load = async (event) => {
     const session = await event.locals.getSession();
